@@ -1,16 +1,25 @@
-use tea_arch_chroot_lib::resource::Timezones;
-use tea_arch_chroot_lib::resource::Locales;
+use tea_arch_chroot_lib::resource::{ Timezones, Locales, FirmwareKind };
 use tea_arch_chroot_lib::chroot::Timezone;
 use tea_arch_chroot_lib::chroot::Account;
 use tea_arch_chroot_lib::chroot::Locale;
 use tea_arch_chroot_lib::chroot::pacman::install_package;
+use tea_arch_chroot_lib::chroot::bootloader::install_grub_bootloader;
 
 fn main()
 {
     println!("{}", Timezones::list_json());
     println!("{}", Locales::list_json());
 
-    // timezone();
+    bootloader();
+}
+
+fn bootloader()
+{
+    match install_grub_bootloader(FirmwareKind::UEFI, None, Some("/boot"))
+    {
+        Ok(_) => println!("GRUB successfully installed"),
+        Err(e) => panic!("Error: {:#?}", e)
+    }
 }
 
 fn timezone()
