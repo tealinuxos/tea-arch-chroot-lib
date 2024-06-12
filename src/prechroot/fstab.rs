@@ -1,7 +1,7 @@
 use duct::cmd;
 use std::fs::File;
 
-pub fn generate_fstab() -> Option<()>
+pub async fn generate_fstab() -> Option<()>
 {
     let file = File::create("/mnt/etc/fstab").expect("Failed to create fstab file");
 

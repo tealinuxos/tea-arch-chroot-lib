@@ -1,6 +1,6 @@
 use duct::cmd;
 
-pub fn start_rsync() -> Option<()>
+pub async fn start_rsync() -> Option<()>
 {
     let command = r#"rsync
         -aAXv
