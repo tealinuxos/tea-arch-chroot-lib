@@ -3,7 +3,7 @@ use duct::cmd;
 use std::io::{ Write, Error };
 use serde::{ Serialize, Deserialize };
 
-#[derive(Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Locale
 {
     default: String,
