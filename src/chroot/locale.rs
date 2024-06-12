@@ -6,17 +6,17 @@ use serde::{ Serialize, Deserialize };
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Locale
 {
-    default: String,
+    main: String,
     locales: Vec<String>
 }
 
 impl Locale
 {
-    pub fn new(default: &str, locales: Vec<&str>) -> Self
+    pub fn new(main: &str, locales: Vec<&str>) -> Self
     {
         Self
         {
-            default: default.to_string(),
+            main: main.to_string(),
             locales: locales.iter().map(|s| s.to_string()).collect::<Vec<String>>()
         }
     }
@@ -28,7 +28,7 @@ impl Locale
             Ok(_) => {
 
                 cmd!("arch-chroot", "/mnt", "locale-gen").run()?;
-                Self::set_lang_variable(self.default)?;
+                Self::set_lang_variable(self.main)?;
 
                 Ok(())
             }
