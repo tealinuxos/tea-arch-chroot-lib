@@ -1,8 +1,9 @@
 use duct::cmd;
 use std::fs::File;
 use std::io::{ Error, Write };
+use serde::{ Serialize, Deserialize };
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Account
 {
     fullname: String,

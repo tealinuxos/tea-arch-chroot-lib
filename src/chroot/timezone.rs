@@ -1,6 +1,8 @@
 use duct::cmd;
 use std::io::Error;
+use serde::{ Serialize, Deserialize };
 
+#[derive(Serialize, Deserialize)]
 pub struct Timezone
 {
     region: String,

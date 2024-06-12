@@ -1,7 +1,9 @@
 use std::fs::File;
 use duct::cmd;
 use std::io::{ Write, Error };
+use serde::{ Serialize, Deserialize };
 
+#[derive(Serialize, Deserialize)]
 pub struct Locale
 {
     default: String,
