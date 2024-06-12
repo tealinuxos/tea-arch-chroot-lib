@@ -1,9 +1,9 @@
-use arch_chroot::resource::timezone::Timezones;
-use arch_chroot::resource::locale::Locales;
-use arch_chroot::chroot::timezone::Timezone;
-use arch_chroot::chroot::account::Account;
-use arch_chroot::chroot::locale::Locale;
-use arch_chroot::chroot::pacman::install_package;
+use tea_arch_chroot_lib::resource::timezone::Timezones;
+use tea_arch_chroot_lib::resource::locale::Locales;
+use tea_arch_chroot_lib::chroot::timezone::Timezone;
+use tea_arch_chroot_lib::chroot::account::Account;
+use tea_arch_chroot_lib::chroot::locale::Locale;
+use tea_arch_chroot_lib::chroot::pacman::install_package;
 
 fn main()
 {
