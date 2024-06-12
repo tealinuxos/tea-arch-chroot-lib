@@ -1,8 +1,8 @@
-use tea_arch_chroot_lib::resource::timezone::Timezones;
-use tea_arch_chroot_lib::resource::locale::Locales;
-use tea_arch_chroot_lib::chroot::timezone::Timezone;
-use tea_arch_chroot_lib::chroot::account::Account;
-use tea_arch_chroot_lib::chroot::locale::Locale;
+use tea_arch_chroot_lib::resource::Timezones;
+use tea_arch_chroot_lib::resource::Locales;
+use tea_arch_chroot_lib::chroot::Timezone;
+use tea_arch_chroot_lib::chroot::Account;
+use tea_arch_chroot_lib::chroot::Locale;
 use tea_arch_chroot_lib::chroot::pacman::install_package;
 
 fn main()
