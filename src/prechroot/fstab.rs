@@ -1,7 +1,8 @@
 use duct::cmd;
 use std::fs::File;
+use std::io::Error;
 
-pub async fn generate_fstab() -> Option<()>
+pub async fn generate_fstab() -> Result<(), Error>
 {
     let file = File::create("/mnt/etc/fstab").expect("Failed to create fstab file");
 
@@ -9,12 +10,8 @@ pub async fn generate_fstab() -> Option<()>
 
     let command: Vec<String> = command.split_whitespace().map(|s| s.to_string()).collect();
 
-    let generate = cmd(&command[0], &command[1..]).stdout_file(file).run();
+    cmd(&command[0], &command[1..]).stdout_file(file).run()?;
 
-    match generate
-    {
-        Ok(_) => Some(()),
-        Err(_) => None
-    }
+    Ok(())
 }
 

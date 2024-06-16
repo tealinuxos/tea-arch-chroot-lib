@@ -1,6 +1,7 @@
 use duct::cmd;
+use std::io::Error;
 
-pub async fn start_rsync() -> Option<()>
+pub async fn start_rsync() -> Result<(), Error>
 {
     let command = r#"rsync
         -aAXv
@@ -24,11 +25,7 @@ pub async fn start_rsync() -> Option<()>
 
     let command: Vec<String> = command.split_whitespace().map(|s| s.to_string()).collect();
 
-    let rsync = cmd(&command[0], &command[1..]).run();
+    cmd(&command[0], &command[1..]).run()?;
 
-    match rsync
-    {
-        Ok(_) => Some(()),
-        Err(_) => None
-    }
+    Ok(())
 }
