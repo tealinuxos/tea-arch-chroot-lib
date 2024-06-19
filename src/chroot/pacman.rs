@@ -46,3 +46,10 @@ pub fn install_package(packages: Vec<&str>) -> Result<(), Error>
 
     Ok(())
 }
+
+pub fn refresh_database() -> Result<(), Error>
+{
+    cmd!("pacman", "-Syy").run()?;
+
+    Ok(())
+}
