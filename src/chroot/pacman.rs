@@ -26,7 +26,7 @@ pub fn regenerate_pacman_key() -> Result<(), Error>
     }
 }
 
-pub fn update() -> Result<(), Error>
+pub fn update_packages() -> Result<(), Error>
 {
     let command = "arch-chroot /mnt pacman -Syyu --ask 4";
 
