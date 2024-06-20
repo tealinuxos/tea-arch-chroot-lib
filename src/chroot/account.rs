@@ -42,7 +42,7 @@ impl Account
 
     pub fn add_user(&self) -> Result<(), Error>
     {
-        let command = cmd!("arc-chroot", "/mnt", "useradd", "-mG", "wheel", &self.username).run();
+        let command = cmd!("useradd", "-mG", "wheel", &self.username).run();
 
         match command
         {
@@ -83,21 +83,21 @@ impl Account
 
     fn set_root_password(password: &str) -> Result<(), Error>
     {
-        cmd!("arch-chroot", "/mnt", "passwd", "--stdin").stdin_bytes(password).run()?;
+        cmd!("passwd", "--stdin").stdin_bytes(password).run()?;
 
         Ok(())
     }
 
     fn set_user_password(username: &str, password: &str) -> Result<(), Error>
     {
-        cmd!("arch-chroot", "/mnt", "passwd", username, "--stdin").stdin_bytes(password).run()?;
+        cmd!("passwd", username, "--stdin").stdin_bytes(password).run()?;
 
         Ok(())
     }
 
     fn set_user_fullname(username: &str, fullname: &str) -> Result<(), Error>
     {
-        cmd!("arch-chroot", "/mnt", "chfn", "--full-name", fullname, username).run()?;
+        cmd!("chfn", "--full-name", fullname, username).run()?;
 
         Ok(())
     }
