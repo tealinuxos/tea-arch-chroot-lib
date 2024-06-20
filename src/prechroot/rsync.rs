@@ -19,6 +19,7 @@ pub async fn start_rsync() -> Result<(), Error>
         --exclude=/media/*
         --exclude=/var/cache/*
         --exclude=/
+        --exclude=/home/*
         --exclude=/lost+found/*
         /
         /mnt"#;

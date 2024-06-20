@@ -4,13 +4,24 @@ use tea_arch_chroot_lib::chroot::Account;
 use tea_arch_chroot_lib::chroot::Locale;
 use tea_arch_chroot_lib::chroot::pacman::install_package;
 use tea_arch_chroot_lib::chroot::bootloader::install_grub_bootloader;
+use tea_arch_chroot_lib::prechroot::rsync::start_rsync;
 
-fn main()
+#[tokio::main]
+async fn main()
 {
     println!("{}", Timezones::list_json());
     println!("{}", Locales::list_json());
 
-    bootloader();
+    rsync().await;
+}
+
+async fn rsync()
+{
+    match start_rsync().await
+    {
+        Ok(_) => println!("RSYNC success"),
+        Err(e) => panic!("Error: {:#?}", e)
+    }
 }
 
 fn bootloader()
