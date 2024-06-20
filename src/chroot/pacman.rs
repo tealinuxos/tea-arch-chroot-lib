@@ -41,7 +41,7 @@ pub fn install_package(packages: Vec<&str>) -> Result<(), Error>
 {
     for package in packages
     {
-        cmd!("pacman", "-S", "--needed", "--noconfirm", package).run()?;
+        cmd!("arch-chroot", "/mnt", "pacman", "-S", "--needed", "--noconfirm", package).run()?;
     }
 
     Ok(())
@@ -49,14 +49,14 @@ pub fn install_package(packages: Vec<&str>) -> Result<(), Error>
 
 pub fn refresh_database() -> Result<(), Error>
 {
-    cmd!("pacman", "-Syy").run()?;
+    cmd!("arch-chroot", "/mnt", "pacman", "-Syy").run()?;
 
     Ok(())
 }
 
 pub fn refresh_mirror(country: &str) -> Result<(), Error>
 {
-    cmd!("reflector", "--sort", "rate", "--country", country, "--protocol", "https", "--save", "/etc/pacman.d/mirrorlist").run()?;
+    cmd!("arch-chroot", "/mnt", "reflector", "--sort", "rate", "--country", country, "--protocol", "https", "--save", "/etc/pacman.d/mirrorlist").run()?;
 
     Ok(())
 }
