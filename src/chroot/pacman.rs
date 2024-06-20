@@ -53,3 +53,10 @@ pub fn refresh_database() -> Result<(), Error>
 
     Ok(())
 }
+
+pub fn refresh_mirror(country: &str) -> Result<(), Error>
+{
+    cmd!("reflector", "--sort", "rate", "--country", country, "--protocol", "https", "--save", "/etc/pacman.d/mirrorlist").run()?;
+
+    Ok(())
+}

@@ -2,7 +2,7 @@ use tea_arch_chroot_lib::resource::{ Timezones, Locales, FirmwareKind };
 use tea_arch_chroot_lib::chroot::Timezone;
 use tea_arch_chroot_lib::chroot::Account;
 use tea_arch_chroot_lib::chroot::Locale;
-use tea_arch_chroot_lib::chroot::pacman::install_package;
+use tea_arch_chroot_lib::chroot::pacman::{install_package, refresh_mirror};
 use tea_arch_chroot_lib::chroot::bootloader::install_grub_bootloader;
 use tea_arch_chroot_lib::prechroot::rsync::start_rsync;
 
@@ -12,7 +12,16 @@ async fn main()
     println!("{}", Timezones::list_json());
     println!("{}", Locales::list_json());
 
-    rsync().await;
+    mirror();
+}
+
+fn mirror()
+{
+    match refresh_mirror("Singapore")
+    {
+        Ok(_) => println!("Mirror refreshed"),
+        Err(e) => panic!("Error: {:#?}", e)
+    }
 }
 
 async fn rsync()
