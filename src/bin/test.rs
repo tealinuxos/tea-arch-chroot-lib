@@ -1,4 +1,4 @@
-use tea_arch_chroot_lib::resource::{ Timezones, Locales, FirmwareKind };
+use tea_arch_chroot_lib::resource::{ Timezones, Locales, FirmwareKind, Keyboard };
 use tea_arch_chroot_lib::chroot::Timezone;
 use tea_arch_chroot_lib::chroot::Account;
 use tea_arch_chroot_lib::chroot::Locale;
@@ -11,10 +11,39 @@ async fn main()
 {
     println!("{}", Timezones::list_json());
     println!("{}", Locales::list_json());
-
+    
     mirror();
 }
 
+#[allow(dead_code)]
+fn keyboard_model()
+{
+    println!("{}", Keyboard::model_json());
+    println!("{}", Keyboard::model("pc86"));
+}
+
+#[allow(dead_code)]
+fn keyboard_layout()
+{
+    println!("{}", Keyboard::layout_json());
+    println!("{}", Keyboard::layout("id"));
+}
+
+#[allow(dead_code)]
+fn keyboard_variant()
+{
+    println!("{}", Keyboard::variant_json());
+    println!("{}", Keyboard::variant("ewe"));
+}
+
+#[allow(dead_code)]
+fn keyboard_option()
+{
+    println!("{}", Keyboard::option_json());
+    println!("{}", Keyboard::option("custom"));
+}
+
+#[allow(dead_code)]
 fn mirror()
 {
     match refresh_mirror("Singapore")
@@ -24,6 +53,7 @@ fn mirror()
     }
 }
 
+#[allow(dead_code)]
 async fn rsync()
 {
     match start_rsync().await
@@ -33,6 +63,7 @@ async fn rsync()
     }
 }
 
+#[allow(dead_code)]
 fn bootloader()
 {
     match install_grub_bootloader(FirmwareKind::UEFI, None, Some("/boot"))
@@ -42,6 +73,7 @@ fn bootloader()
     }
 }
 
+#[allow(dead_code)]
 fn timezone()
 {
     let user = Timezone::new("Asia", "Jakarta");
@@ -53,6 +85,7 @@ fn timezone()
     }
 }
 
+#[allow(dead_code)]
 fn locale()
 {
     let locale = vec!["en_US.UTF-8 UTF-8", "id_ID.UTF-8 UTF-8"];
@@ -66,6 +99,7 @@ fn locale()
     }
 }
 
+#[allow(dead_code)]
 fn account()
 {
     let user = Account::new("Rustlix Slix", "rust2", "slixx", "whatever");
@@ -87,6 +121,7 @@ fn account()
     }
 }
 
+#[allow(dead_code)]
 fn pacman_install()
 {
     let packages = vec!["fastfetch", "neofetch", "git", "giw"];
