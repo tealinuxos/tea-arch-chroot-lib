@@ -1,7 +1,18 @@
 use crate::resource::FirmwareKind;
 use std::io::Error;
 use duct::cmd;
+use std::path::Path;
 
+pub fn get_firmware_type() -> FirmwareKind
+{
+    let path = Path::new("/sys/firmware/efi/");
+
+    match path.exists()
+    {
+        true => FirmwareKind::UEFI,
+        _ => FirmwareKind::BIOS
+    }
+}
 
 pub fn install_grub_bootloader(firmware_kind: FirmwareKind, disk: Option<&str>, efi: Option<&str>) -> Result<(), Error>
 {
