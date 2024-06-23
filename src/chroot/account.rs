@@ -104,7 +104,7 @@ impl Account
 
     pub fn remove_user(username: &str) -> Result<(), Error>
     {
-        cmd!("userdel", "--remove", username).run()?;
+        cmd!("arch-chroot", "/mnt", "userdel", "--remove", username).run()?;
 
         Ok(())
     }
