@@ -14,7 +14,7 @@ pub fn get_firmware_type() -> FirmwareKind
     }
 }
 
-pub fn install_grub_bootloader(firmware_kind: FirmwareKind, disk: Option<&str>, efi: Option<&str>) -> Result<(), Error>
+pub fn install_grub_bootloader(firmware_kind: FirmwareKind, disk: Option<String>, efi: Option<String>) -> Result<(), Error>
 {
     let command = match firmware_kind
     {
