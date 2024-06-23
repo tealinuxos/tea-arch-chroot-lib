@@ -101,4 +101,11 @@ impl Account
 
         Ok(())
     }
+
+    pub fn remove_user(username: &str) -> Result<(), Error>
+    {
+        cmd!("userdel", "--remove", username).run()?;
+
+        Ok(())
+    }
 }
