@@ -36,7 +36,7 @@ async fn rsync()
 #[allow(dead_code)]
 fn bootloader()
 {
-    match install_grub_bootloader(FirmwareKind::UEFI, None, Some("/boot"))
+    match install_grub_bootloader(FirmwareKind::UEFI, None, Some("/boot".to_string()))
     {
         Ok(_) => println!("GRUB successfully installed"),
         Err(e) => panic!("Error: {:#?}", e)

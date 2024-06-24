@@ -41,7 +41,7 @@ pub fn install_package(packages: Vec<&str>) -> Result<(), Error>
 {
     for package in packages
     {
-        cmd!("arch-chroot", "/mnt", "pacman", "-S", "--needed", "--noconfirm", package).run()?;
+        cmd!("arch-chroot", "/mnt", "pacman", "-S", "--noconfirm", package).run()?;
     }
 
     Ok(())
