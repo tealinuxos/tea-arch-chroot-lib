@@ -18,8 +18,8 @@ pub struct Variant
 }
 
 impl Keyboard{
-    pub fn list() -> HashMap<String, Vec<Self>> {
-        let mut keyboard = HashMap::new();
+    pub fn list() -> Vec<Keyboard> {
+
         let mut variants = HashMap::new();
 
         variants.insert(
@@ -2207,7 +2207,7 @@ impl Keyboard{
         );
         
     
-        let value = vec![
+        let keyboard = vec![
             Keyboard {
                 code: "al".to_string(),
                 name: "Albanian".to_string(),
@@ -2565,7 +2565,6 @@ impl Keyboard{
             },            
         ];
 
-        keyboard.insert(String::from("Keyboard"), value);
         keyboard
     }
 }
