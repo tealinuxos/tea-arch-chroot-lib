@@ -58,9 +58,9 @@ fn timezone()
 #[allow(dead_code)]
 fn locale()
 {
-    let locale = vec!["en_US.UTF-8 UTF-8", "id_ID.UTF-8 UTF-8"];
+    let locale = ["en_US.UTF-8 UTF-8", "id_ID.UTF-8 UTF-8"];
 
-    let user = Locale::new(locale[0], locale);
+    let user = Locale::new(locale[0]);
 
     match user.set_locale()
     {
