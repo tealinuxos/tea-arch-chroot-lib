@@ -8,7 +8,6 @@ pub async fn start_rsync() -> Result<(), Error>
         --exclude=/opt/tea-installer/*
         --exclude=/etc/motd
         --exclude=/etc/systemd/system/getty@tty1.service.d/*
-        --exclude=/etc/mkinitcpio.conf
         --exclude=/etc/mkinitcpio.conf.d/*
         --exclude=/etc/mkinitcpio.d/*
         --exclude=/dev/*
