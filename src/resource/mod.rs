@@ -7,7 +7,7 @@ pub use self::timezone::Timezones;
 pub use self::locale::Locales;
 pub use self::keyboard::Keyboard;
 
-#[derive(Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub enum FirmwareKind
 {
     UEFI,
