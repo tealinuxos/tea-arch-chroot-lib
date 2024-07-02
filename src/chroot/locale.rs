@@ -30,7 +30,7 @@ impl Locale
             Ok(_) => {
 
                 cmd!("arch-chroot", "/mnt", "locale-gen").run()?;
-                Self::set_lang_variable(&self.main)?;
+                Self::set_locale_dot_conf(&self.main)?;
 
                 Ok(())
             }
@@ -77,7 +77,7 @@ impl Locale
         Ok(())
     }
 
-    fn set_lang_variable(locale: &str) -> Result<(), Error>
+    fn set_locale_dot_conf(locale: &str) -> Result<(), Error>
     {
         let locale = locale.split_whitespace().next().unwrap();
         let locale_dot_conf = File::create("/mnt/etc/locale.conf");
@@ -85,7 +85,17 @@ impl Locale
         match locale_dot_conf
         {
             Ok(mut file) => {
-                file.write_fmt(format_args!("LANG={}", locale))?;
+
+                file.write_fmt(format_args!("LANG=en_US.UTF-8"))?;
+                file.write_fmt(format_args!("LC_ADDRESS={}", locale))?;
+                file.write_fmt(format_args!("LC_IDENTIFICATION={}", locale))?;
+                file.write_fmt(format_args!("LC_MEASUREMENT={}", locale))?;
+                file.write_fmt(format_args!("LC_MONETARY={}", locale))?;
+                file.write_fmt(format_args!("LC_NAME={}", locale))?;
+                file.write_fmt(format_args!("LC_NUMERIC={}", locale))?;
+                file.write_fmt(format_args!("LC_PAPER={}", locale))?;
+                file.write_fmt(format_args!("LC_TELEPHONE={}", locale))?;
+                file.write_fmt(format_args!("LC_TIME={}", locale))?;
 
                 Ok(())
             }
