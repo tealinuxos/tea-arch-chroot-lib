@@ -24,6 +24,7 @@ impl Locale
 
     pub fn set_locale(self) -> Result<(), Error>
     {
+        Self::write_locale("en_US.UTF-8 UTF-8")?;
         match Self::write_locale(&self.main)
         {
             Ok(_) => {
