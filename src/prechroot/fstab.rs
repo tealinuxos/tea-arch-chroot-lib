@@ -4,9 +4,9 @@ use std::io::Error;
 
 pub async fn generate_fstab() -> Result<(), Error>
 {
-    let file = File::create("/mnt/etc/fstab").expect("Failed to create fstab file");
+    let file = File::create("/tealinux-mount/etc/fstab").expect("Failed to create fstab file");
 
-    let command = "genfstab -U /mnt";
+    let command = "genfstab -U /tealinux-mount";
 
     let command: Vec<String> = command.split_whitespace().map(|s| s.to_string()).collect();
 

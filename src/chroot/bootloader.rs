@@ -21,11 +21,11 @@ pub fn install_grub_bootloader(firmware_kind: FirmwareKind, disk: Option<String>
         FirmwareKind::UEFI => {
 
             let efi_dirs = format!("--efi-directory={}", efi.expect("EFI not specified"));
-            cmd!("arch-chroot", "/mnt", "grub-install", "--target=x86_64-efi", efi_dirs, "--bootloader-id=TealinuxOS")
+            cmd!("arch-chroot", "/tealinux-mount", "grub-install", "--target=x86_64-efi", efi_dirs, "--bootloader-id=TealinuxOS")
         }
 
         FirmwareKind::BIOS => {
-            cmd!("arch-chroot", "/mnt", "grub-install", "--target=i386-pc", disk.expect("Disk not specified"))
+            cmd!("arch-chroot", "/tealinux-mount", "grub-install", "--target=i386-pc", disk.expect("Disk not specified"))
         }
     };
 
@@ -43,7 +43,7 @@ pub fn install_grub_bootloader(firmware_kind: FirmwareKind, disk: Option<String>
 
 pub fn grub_mkconfig() -> Result<(), Error>
 {
-    cmd!("arch-chroot", "/mnt", "grub-mkconfig", "-o", "/boot/grub/grub.cfg").run()?;
+    cmd!("arch-chroot", "/tealinux-mount", "grub-mkconfig", "-o", "/boot/grub/grub.cfg").run()?;
 
     Ok(())
 }

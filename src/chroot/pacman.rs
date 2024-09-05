@@ -3,7 +3,7 @@ use std::io::Error;
 
 pub fn regenerate_pacman_key() -> Result<(), Error>
 {
-    let command = "arch-chroot /mnt pacman-key --init";
+    let command = "arch-chroot /tealinux-mount pacman-key --init";
 
     let command: Vec<String> = command.split_whitespace().map(|s| s.to_string()).collect();
 
@@ -13,7 +13,7 @@ pub fn regenerate_pacman_key() -> Result<(), Error>
     {
         Ok(_) => {
 
-            let command = "arch-chroot /mnt pacman-key --populate";
+            let command = "arch-chroot /tealinux-mount pacman-key --populate";
 
             let command: Vec<String> = command.split_whitespace().map(|s| s.to_string()).collect();
 
@@ -28,7 +28,7 @@ pub fn regenerate_pacman_key() -> Result<(), Error>
 
 pub fn update_packages() -> Result<(), Error>
 {
-    let command = "arch-chroot /mnt pacman -Syyu --ask 4";
+    let command = "arch-chroot /tealinux-mount pacman -Syyu --ask 4";
 
     let command: Vec<String> = command.split_whitespace().map(|s| s.to_string()).collect();
 
@@ -41,7 +41,7 @@ pub fn install_package(packages: Vec<&str>) -> Result<(), Error>
 {
     for package in packages
     {
-        cmd!("arch-chroot", "/mnt", "pacman", "-S", "--noconfirm", package).run()?;
+        cmd!("arch-chroot", "/tealinux-mount", "pacman", "-S", "--noconfirm", package).run()?;
     }
 
     Ok(())
@@ -49,14 +49,14 @@ pub fn install_package(packages: Vec<&str>) -> Result<(), Error>
 
 pub fn refresh_database() -> Result<(), Error>
 {
-    cmd!("arch-chroot", "/mnt", "pacman", "-Syy").run()?;
+    cmd!("arch-chroot", "/tealinux-mount", "pacman", "-Syy").run()?;
 
     Ok(())
 }
 
 pub fn refresh_mirror(country: &str) -> Result<(), Error>
 {
-    cmd!("arch-chroot", "/mnt", "reflector", "--sort", "rate", "--country", country, "--protocol", "https", "--save", "/etc/pacman.d/mirrorlist").run()?;
+    cmd!("arch-chroot", "/tealinux-mount", "reflector", "--sort", "rate", "--country", country, "--protocol", "https", "--save", "/etc/pacman.d/mirrorlist").run()?;
 
     Ok(())
 }

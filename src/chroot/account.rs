@@ -42,7 +42,7 @@ impl Account
 
     pub fn add_user(&self) -> Result<(), Error>
     {
-        let command = cmd!("arch-chroot", "/mnt", "useradd", "-mG", "wheel", &self.username).run();
+        let command = cmd!("arch-chroot", "/tealinux-mount", "useradd", "-mG", "wheel", &self.username).run();
 
         match command
         {
@@ -66,7 +66,7 @@ impl Account
 
     fn write_hostname(hostname: &str) -> Result<(), Error>
     {
-        let file = File::create("/mnt/etc/hostname");
+        let file = File::create("/tealinux-mount/etc/hostname");
 
         match file
         {
@@ -83,28 +83,28 @@ impl Account
 
     fn set_root_password(password: &str) -> Result<(), Error>
     {
-        cmd!("arch-chroot", "/mnt", "passwd", "--stdin").stdin_bytes(password).run()?;
+        cmd!("arch-chroot", "/tealinux-mount", "passwd", "--stdin").stdin_bytes(password).run()?;
 
         Ok(())
     }
 
     fn set_user_password(username: &str, password: &str) -> Result<(), Error>
     {
-        cmd!("arch-chroot", "/mnt", "passwd", username, "--stdin").stdin_bytes(password).run()?;
+        cmd!("arch-chroot", "/tealinux-mount", "passwd", username, "--stdin").stdin_bytes(password).run()?;
 
         Ok(())
     }
 
     fn set_user_fullname(username: &str, fullname: &str) -> Result<(), Error>
     {
-        cmd!("arch-chroot", "/mnt", "chfn", "--full-name", fullname, username).run()?;
+        cmd!("arch-chroot", "/tealinux-mount", "chfn", "--full-name", fullname, username).run()?;
 
         Ok(())
     }
 
     pub fn remove_user(username: &str) -> Result<(), Error>
     {
-        cmd!("arch-chroot", "/mnt", "userdel", "--remove", username).run()?;
+        cmd!("arch-chroot", "/tealinux-mount", "userdel", "--remove", username).run()?;
 
         Ok(())
     }

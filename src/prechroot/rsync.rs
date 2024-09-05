@@ -16,13 +16,14 @@ pub async fn start_rsync() -> Result<(), Error>
         --exclude=/tmp/*
         --exclude=/run/*
         --exclude=/mnt/*
+        --exclude=/tealinux-mount
         --exclude=/media/*
         --exclude=/var/cache/*
         --exclude=/
         --exclude=/home/*
         --exclude=/lost+found/*
         /
-        /mnt"#;
+        /tealinux-mount"#;
 
     let command: Vec<String> = command.split_whitespace().map(|s| s.to_string()).collect();
 

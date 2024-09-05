@@ -29,7 +29,7 @@ impl Locale
         {
             Ok(_) => {
 
-                cmd!("arch-chroot", "/mnt", "locale-gen").run()?;
+                cmd!("arch-chroot", "/tealinux-mount", "locale-gen").run()?;
                 Self::set_locale_dot_conf(&self.main)?;
 
                 Ok(())
@@ -46,7 +46,7 @@ impl Locale
     //         .map(|s| s.to_string() + "\n")
     //         .collect::<String>();
     //
-    //     let locale_dot_gen = File::create("/mnt/etc/locale.gen");
+    //     let locale_dot_gen = File::create("/tealinux-mount/etc/locale.gen");
     //
     //     match locale_dot_gen
     //     {
@@ -57,7 +57,7 @@ impl Locale
 
     fn write_locale(locale: &str) -> Result<(), Error>
     {
-        let locale_dot_gen = File::open("/mnt/etc/locale.gen")?;
+        let locale_dot_gen = File::open("/tealinux-mount/etc/locale.gen")?;
         let mut locale_dot_gen = BufReader::new(locale_dot_gen);
 
         let mut before = String::new();
@@ -69,7 +69,7 @@ impl Locale
             .map(|line| if line.ends_with(locale) { format!("{}\n", line.replace("#", "")) } else { format!("{}\n", line) })
             .collect::<String>();
 
-        let locale_dot_gen = File::create("/mnt/etc/locale.gen")?;
+        let locale_dot_gen = File::create("/tealinux-mount/etc/locale.gen")?;
         let mut locale_dot_gen = BufWriter::new(locale_dot_gen);
 
         locale_dot_gen.write_fmt(format_args!("{}", after))?;
@@ -80,22 +80,22 @@ impl Locale
     fn set_locale_dot_conf(locale: &str) -> Result<(), Error>
     {
         let locale = locale.split_whitespace().next().unwrap();
-        let locale_dot_conf = File::create("/mnt/etc/locale.conf");
+        let locale_dot_conf = File::create("/tealinux-mount/etc/locale.conf");
 
         match locale_dot_conf
         {
             Ok(mut file) => {
 
-                file.write_fmt(format_args!("LANG=en_US.UTF-8"))?;
-                file.write_fmt(format_args!("LC_ADDRESS={}", locale))?;
-                file.write_fmt(format_args!("LC_IDENTIFICATION={}", locale))?;
-                file.write_fmt(format_args!("LC_MEASUREMENT={}", locale))?;
-                file.write_fmt(format_args!("LC_MONETARY={}", locale))?;
-                file.write_fmt(format_args!("LC_NAME={}", locale))?;
-                file.write_fmt(format_args!("LC_NUMERIC={}", locale))?;
-                file.write_fmt(format_args!("LC_PAPER={}", locale))?;
-                file.write_fmt(format_args!("LC_TELEPHONE={}", locale))?;
-                file.write_fmt(format_args!("LC_TIME={}", locale))?;
+                file.write_fmt(format_args!("LANG=en_US.UTF-8\n"))?;
+                file.write_fmt(format_args!("LC_ADDRESS={}\n", locale))?;
+                file.write_fmt(format_args!("LC_IDENTIFICATION={}\n", locale))?;
+                file.write_fmt(format_args!("LC_MEASUREMENT={}\n", locale))?;
+                file.write_fmt(format_args!("LC_MONETARY={}\n", locale))?;
+                file.write_fmt(format_args!("LC_NAME={}\n", locale))?;
+                file.write_fmt(format_args!("LC_NUMERIC={}\n", locale))?;
+                file.write_fmt(format_args!("LC_PAPER={}\n", locale))?;
+                file.write_fmt(format_args!("LC_TELEPHONE={}\n", locale))?;
+                file.write_fmt(format_args!("LC_TIME={}\n", locale))?;
 
                 Ok(())
             }
