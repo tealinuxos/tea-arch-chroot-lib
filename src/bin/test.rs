@@ -1,3 +1,4 @@
+use tea_arch_chroot_lib::chroot;
 #[allow(unused_imports)]
 use tea_arch_chroot_lib::resource::{ Timezones, Locales, FirmwareKind, Keyboard };
 use tea_arch_chroot_lib::chroot::Timezone;
@@ -6,11 +7,14 @@ use tea_arch_chroot_lib::chroot::Locale;
 use tea_arch_chroot_lib::chroot::pacman::{install_package, refresh_mirror};
 use tea_arch_chroot_lib::chroot::bootloader::install_grub_bootloader;
 use tea_arch_chroot_lib::prechroot::rsync::start_rsync;
+use tea_arch_chroot_lib::chroot::keyboard;
 
 #[tokio::main]
 async fn main()
 {
-    println!("{}", serde_json::to_string_pretty(&Keyboard::list()).unwrap());
+    // println!("{}", serde_json::to_string_pretty(&Keyboard::list()).unwrap());
+    // locale();
+    keyboard();
 }
 
 #[allow(dead_code)]
@@ -60,7 +64,7 @@ fn locale()
 {
     let locale = ["en_US.UTF-8 UTF-8", "id_ID.UTF-8 UTF-8"];
 
-    let user = Locale::new(locale[0]);
+    let user = Locale::new("id_ID.UTF-8 UTF-8");
 
     match user.set_locale()
     {
@@ -100,5 +104,17 @@ fn pacman_install()
     {
         Ok(_) => println!("Successfully installed all packages"),
         Err(e) => panic!("Failed installing one or more package: {:?}", e)
+    }
+}
+
+#[allow(dead_code)]
+fn keyboard()
+{
+    let keyb = keyboard::Keyboard::new("en", "qwerty");
+
+    match keyb.set_keymap_cosmic("ssa")
+    {
+        Ok(_) => println!("Success"),
+        Err(e) => println!("Error: {}", e)
     }
 }
