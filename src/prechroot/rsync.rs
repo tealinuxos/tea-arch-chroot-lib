@@ -5,6 +5,7 @@ pub async fn start_rsync() -> Result<(), Error>
 {
     let command = r#"rsync
         -aAXv
+        --ignore-missing-args
         --exclude=/opt/tea-installer/*
         --exclude=/etc/motd
         --exclude=/etc/systemd/system/getty@tty1.service.d/*
