@@ -6,9 +6,9 @@ use serde::{ Serialize, Deserialize };
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Account
 {
-    fullname: String,
-    username: String,
-    hostname: String,
+    pub fullname: String,
+    pub username: String,
+    pub hostname: String,
     password: String
 }
 
