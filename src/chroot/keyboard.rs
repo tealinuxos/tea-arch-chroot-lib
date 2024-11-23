@@ -35,8 +35,8 @@ impl Keyboard
         };
 
         let config = format!(r#"(
-    rules: ""
-    model: ""
+    rules: "",
+    model: "",
     layout: "{}",
     variant: "{}",
     options: ""
