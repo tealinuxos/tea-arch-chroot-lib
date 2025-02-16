@@ -66,7 +66,7 @@ impl Locale
 
         let after = before
             .lines()
-            .map(|line| if line.ends_with(locale) { format!("{}\n", line.replace("#", "")) } else { format!("{}\n", line) })
+            .map(|line| if line.trim().ends_with(locale) { format!("{}\n", line.replace("#", "")) } else { format!("{}\n", line) })
             .collect::<String>();
 
         let locale_dot_gen = File::create("/tealinux-mount/etc/locale.gen")?;
