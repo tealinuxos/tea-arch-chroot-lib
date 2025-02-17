@@ -22,6 +22,11 @@ impl Locale
         }
     }
 
+    pub fn get_main_locale(self) -> String
+    {
+        self.main
+    }
+
     pub fn set_locale(self) -> Result<(), Error>
     {
         Self::write_locale("en_US.UTF-8 UTF-8")?;
