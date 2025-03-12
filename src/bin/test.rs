@@ -1,4 +1,4 @@
-use tea_arch_chroot_lib::chroot;
+use tea_arch_chroot_lib::chroot::os::Os;
 #[allow(unused_imports)]
 use tea_arch_chroot_lib::resource::{ Timezones, Locales, FirmwareKind, Keyboard };
 use tea_arch_chroot_lib::chroot::Timezone;
@@ -14,7 +14,8 @@ async fn main()
 {
     // println!("{}", serde_json::to_string_pretty(&Keyboard::list()).unwrap());
     // locale();
-    keyboard();
+    os();
+    // keyboard();
 }
 
 #[allow(dead_code)]
@@ -62,15 +63,17 @@ fn timezone()
 #[allow(dead_code)]
 fn locale()
 {
-    let locale = ["en_US.UTF-8 UTF-8", "id_ID.UTF-8 UTF-8"];
+    // let locale = ["en_US.UTF-8 UTF-8", "id_ID.UTF-8 UTF-8"];
 
-    let user = Locale::new("id_ID.UTF-8 UTF-8");
+    let user = Locale::new("en_US.UTF-8 UTF-8");
 
-    match user.set_locale()
-    {
-        Ok(_) => println!("Locale successfully set"),
-        Err(e) => panic!("Error: {:#?}", e)
-    }
+    // match user.set_locale()
+    // {
+    //     Ok(_) => println!("Locale successfully set"),
+    //     Err(e) => panic!("Error: {:#?}", e)
+    // }
+
+    println!("{}", user.get_main_locale());
 }
 
 #[allow(dead_code)]
@@ -118,3 +121,11 @@ fn keyboard()
         Err(e) => println!("Error: {}", e)
     }
 }
+
+#[allow(dead_code)]
+fn os()
+{
+    println!("{:#?}", Os::get_other_os())
+}
+
+
