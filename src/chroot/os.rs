@@ -1,5 +1,5 @@
 use std::error;
-use lazy_regex::{ BytesRegex, regex_captures, Regex };
+use lazy_regex::regex_captures;
 use serde::Serialize;
 use duct::cmd;
 
