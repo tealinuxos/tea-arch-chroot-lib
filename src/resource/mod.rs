@@ -13,3 +13,13 @@ pub enum FirmwareKind
     UEFI,
     BIOS
 }
+
+
+impl FirmwareKind {
+    pub fn as_str(&self) -> &'static str {
+        match self {
+            FirmwareKind::UEFI => "UEFI",
+            FirmwareKind::BIOS => "BIOS",
+        }
+    }
+}
