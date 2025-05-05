@@ -13,3 +13,12 @@ pub enum FirmwareKind
     UEFI,
     BIOS
 }
+
+#[derive(Debug, Serialize, Deserialize, Clone)]
+#[serde(rename_all="lowercase")]
+pub enum MethodKind
+{
+    SINGLE,
+    DUAL,
+    MANUAL
+}
