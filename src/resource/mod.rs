@@ -13,11 +13,3 @@ pub enum FirmwareKind
     UEFI,
     BIOS
 }
-
-#[derive(Debug, Serialize, Deserialize, Clone)]
-pub enum MethodKind
-{
-    SINGLE,
-    DUAL,
-    MANUAL
-}
