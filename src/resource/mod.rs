@@ -14,7 +14,6 @@ pub enum FirmwareKind
     BIOS
 }
 
-
 impl FirmwareKind {
     pub fn as_str(&self) -> &'static str {
         match self {
@@ -22,4 +21,12 @@ impl FirmwareKind {
             FirmwareKind::BIOS => "BIOS",
         }
     }
+  
+#[derive(Debug, Serialize, Deserialize, Clone)]
+#[serde(rename_all="lowercase")]
+pub enum MethodKind
+{
+    SINGLE,
+    DUAL,
+    MANUAL
 }
