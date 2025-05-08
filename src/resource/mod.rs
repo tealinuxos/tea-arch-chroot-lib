@@ -6,6 +6,7 @@ pub mod keyboard;
 pub use self::timezone::Timezones;
 pub use self::locale::Locales;
 pub use self::keyboard::Keyboard;
+use std::default::Default;
 
 #[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
 pub enum FirmwareKind
@@ -30,4 +31,10 @@ pub enum MethodKind
     SINGLE,
     DUAL,
     MANUAL
+}
+
+impl Default for MethodKind {
+    fn default() -> Self {
+        MethodKind::SINGLE
+    }
 }
