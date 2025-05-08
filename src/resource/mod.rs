@@ -21,6 +21,7 @@ impl FirmwareKind {
             FirmwareKind::BIOS => "BIOS",
         }
     }
+}
   
 #[derive(Debug, Serialize, Deserialize, Clone)]
 #[serde(rename_all="lowercase")]
