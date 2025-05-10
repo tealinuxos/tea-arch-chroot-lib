@@ -24,7 +24,7 @@ impl FirmwareKind {
     }
 }
   
-#[derive(Debug, Serialize, Deserialize, Clone)]
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq)]
 #[serde(rename_all="lowercase")]
 pub enum MethodKind
 {
