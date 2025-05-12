@@ -19,9 +19,15 @@ impl Keyboard
         }
     }
 
-    fn write_cosmic_xkb(self, username: &str) -> Result<(), Error>
+    fn write_cosmic_xkb(self, live: bool, username: &str) -> Result<(), Error>
     {
-        let path = format!("/tealinux-mount/home/{}/.config/cosmic/com.system76.CosmicComp/v1/", username);
+        let path = if live
+        {
+            format!("/tealinux-mount/home/{}/.config/cosmic/com.system76.CosmicComp/v1/", username)
+        } else {
+            format!("/home/{}/.config/cosmic/com.system76.CosmicComp/v1/", username)
+        };
+
         let path = Path::new(&path);
 
         let xkb_config = if !Path::exists(Path::new(path))
@@ -50,9 +56,9 @@ impl Keyboard
         Ok(())
     }
 
-    pub fn set_keymap_cosmic(self, username: &str) -> Result<(), Error>
+    pub fn set_keymap_cosmic(self, live: bool, username: &str) -> Result<(), Error>
     {
-        match self.write_cosmic_xkb(username)
+        match self.write_cosmic_xkb(live, username)
         {
             Ok(_) => Ok(()),
             Err(e) => Err(e)
