@@ -45,7 +45,7 @@ impl Keyboard
     model: "",
     layout: "{}",
     variant: "{}",
-    options: ""
+    options: None
 )
             "#, self.layout, self.variant);
 
