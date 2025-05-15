@@ -115,7 +115,7 @@ fn keyboard()
 {
     let keyb = keyboard::Keyboard::new("en", "qwerty");
 
-    match keyb.set_keymap_cosmic("ssa")
+    match keyb.set_keymap_cosmic(false, "ssa")
     {
         Ok(_) => println!("Success"),
         Err(e) => println!("Error: {}", e)
