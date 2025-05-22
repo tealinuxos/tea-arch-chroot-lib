@@ -14,8 +14,8 @@ async fn main()
 {
     // println!("{}", serde_json::to_string_pretty(&Keyboard::list()).unwrap());
     // locale();
-    os();
-    // keyboard();
+    // os();
+    keyboard();
 }
 
 #[allow(dead_code)]
@@ -113,9 +113,9 @@ fn pacman_install()
 #[allow(dead_code)]
 fn keyboard()
 {
-    let keyb = keyboard::Keyboard::new("en", "qwerty");
+    let keyb = keyboard::Keyboard::new("us".to_string(), None);
 
-    match keyb.set_keymap_cosmic(false, "ssa")
+    match keyb.set_keymap_cosmic(false, "ssa".to_string())
     {
         Ok(_) => println!("Success"),
         Err(e) => println!("Error: {}", e)

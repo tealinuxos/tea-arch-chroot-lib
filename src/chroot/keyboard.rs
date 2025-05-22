@@ -5,21 +5,21 @@ use std::path::Path;
 pub struct Keyboard
 {
     layout: String,
-    variant: String
+    variant: Option<String>
 }
 
 impl Keyboard
 {
-    pub fn new(layout: &str, variant: &str) -> Self
+    pub fn new(layout: String, variant: Option<String>) -> Self
     {
         Self
         {
-            layout: layout.to_string(),
-            variant: variant.to_string()
+            layout,
+            variant
         }
     }
 
-    fn write_cosmic_xkb(self, live: bool, username: &str) -> Result<(), Error>
+    fn write_cosmic_xkb(self, live: bool, username: String) -> Result<(), Error>
     {
         let path = if live
         {
@@ -40,14 +40,22 @@ impl Keyboard
             File::create(format!("{}/xkb_config", path.display()))?
         };
 
+        let variant = if let Some(variant) = self.variant
+        {
+            variant
+        }
+        else
+        {
+            "".to_string()
+        };
+
         let config = format!(r#"(
     rules: "",
     model: "",
     layout: "{}",
     variant: "{}",
     options: None
-)
-            "#, self.layout, self.variant);
+)"#, self.layout, variant);
 
         let mut xkb_config_writer = BufWriter::new(xkb_config);
 
@@ -56,7 +64,7 @@ impl Keyboard
         Ok(())
     }
 
-    pub fn set_keymap_cosmic(self, live: bool, username: &str) -> Result<(), Error>
+    pub fn set_keymap_cosmic(self, live: bool, username: String) -> Result<(), Error>
     {
         match self.write_cosmic_xkb(live, username)
         {
