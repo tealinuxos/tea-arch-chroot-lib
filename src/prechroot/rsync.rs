@@ -23,6 +23,7 @@ pub async fn start_rsync() -> Result<(), Error>
         --exclude=/
         --exclude=/home/*
         --exclude=/lost+found/*
+        --exclude=/var/lib/os-prober/mount/*
         /
         /tealinux-mount"#;
 
