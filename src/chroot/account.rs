@@ -1,6 +1,7 @@
 use duct::cmd;
 use std::fs::File;
 use std::io::{ Error, Write };
+use std::path::Path;
 use serde::{ Serialize, Deserialize };
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -105,6 +106,32 @@ impl Account
     pub fn remove_user(username: &str) -> Result<(), Error>
     {
         cmd!("arch-chroot", "/tealinux-mount", "userdel", "--remove", username).run()?;
+
+        Ok(())
+    }
+    
+    pub fn set_cosmic_automatic_login(&self) -> Result<(), Error>
+    {
+        let config_path = Path::new("/etc/greetd/config.toml");
+
+        let init = format!(r#"[initial_session]
+command = "start-cosmic"
+user = "{}"
+"#, self.username);
+
+        if std::fs::exists(config_path)?
+        {
+            let mut config_toml = std::fs::read_to_string(config_path)?;
+            config_toml.push_str(&init);
+
+            let mut config_file = File::create(config_path)?;
+            config_file.write_fmt(format_args!("{}", config_toml))?;
+        }
+        else
+        {
+            let mut config_file = File::create(config_path)?;
+            config_file.write_fmt(format_args!("{}", init))?;
+        }
 
         Ok(())
     }

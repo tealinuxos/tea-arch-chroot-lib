@@ -15,7 +15,8 @@ async fn main()
     // println!("{}", serde_json::to_string_pretty(&Keyboard::list()).unwrap());
     // locale();
     // os();
-    keyboard();
+    // keyboard();
+    account();
 }
 
 #[allow(dead_code)]
@@ -81,21 +82,31 @@ fn account()
 {
     let user = Account::new("Rustlix Slix", "rust2", "slixx", "whatever");
 
-    match user.set_host()
+    match user.set_cosmic_automatic_login()
     {
         Ok(_) => {
-
-            println!("Successfully setting host");
-
-            match user.add_user()
-            {
-                Ok(_) => println!("Successfully adding user"),
-                Err(e) => panic!("Error: {:?}", e)
-            }
+            println!("Successfully set autologin");
+        },
+        Err(e) => {
+            println!("Failed to set autologin {}", e);
         }
-
-        Err(e) => panic!("Error: {:?}", e)
     }
+
+    // match user.set_host()
+    // {
+    //     Ok(_) => {
+    //
+    //         println!("Successfully setting host");
+    //
+    //         match user.add_user()
+    //         {
+    //             Ok(_) => println!("Successfully adding user"),
+    //             Err(e) => panic!("Error: {:?}", e)
+    //         }
+    //     }
+    //
+    //     Err(e) => panic!("Error: {:?}", e)
+    // }
 }
 
 #[allow(dead_code)]
