@@ -80,7 +80,7 @@ fn locale()
 #[allow(dead_code)]
 fn account()
 {
-    let user = Account::new("Rustlix Slix", "rust2", "slixx", "whatever");
+    let user = Account::new("Rustlix Slix", "rust2", "slixx", "whatever", false);
 
     match user.set_cosmic_automatic_login()
     {

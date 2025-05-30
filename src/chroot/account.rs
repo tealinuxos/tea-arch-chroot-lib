@@ -10,19 +10,21 @@ pub struct Account
     pub fullname: String,
     pub username: String,
     pub hostname: String,
-    password: String
+    password: String,
+    pub autologin: bool
 }
 
 impl Account
 {
-    pub fn new(fullname: &str, username: &str, hostname: &str, password: &str) -> Self
+    pub fn new(fullname: &str, username: &str, hostname: &str, password: &str, autologin: bool) -> Self
     {
         Self
         {
             fullname: fullname.to_string(),
             username: username.to_string(),
             hostname: hostname.to_string(),
-            password: password.to_string()
+            password: password.to_string(),
+            autologin
         }
     }
 
