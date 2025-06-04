@@ -114,7 +114,7 @@ impl Account
     
     pub fn set_cosmic_automatic_login(&self) -> Result<(), Error>
     {
-        let config_path = Path::new("/tealinux-mount/etc/greetd/config.toml");
+        let config_path = Path::new("/tealinux-mount/etc/greetd/cosmic-greeter.toml");
 
         let init = format!(r#"[initial_session]
 command = "start-cosmic"
