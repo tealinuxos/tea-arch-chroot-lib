@@ -25,6 +25,7 @@ pub fn install_grub_bootloader(firmware_kind: FirmwareKind, disk: Option<String>
         }
 
         FirmwareKind::BIOS => {
+            let _ = self::grub_mkconfig();
             cmd!("arch-chroot", "/tealinux-mount", "grub-install", "--target=i386-pc", disk.expect("Disk not specified"))
         }
     };
