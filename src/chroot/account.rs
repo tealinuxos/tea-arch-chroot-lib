@@ -137,4 +137,35 @@ user = "{}"
 
         Ok(())
     }
+
+    pub fn set_sddm_automatic_login(&self) -> Result<(), Error>
+    {
+        if !std::fs::exists("/tealinux-mount/etc/sddm.conf.d")?
+        {
+            std::fs::create_dir_all("/tealinux-mount/etc/sddm.conf.d/")?;
+        }
+
+        let config_path = Path::new("/tealinux-mount/etc/sddm.conf.d/autologin.conf");
+
+        let init = format!(r#"[Autologin]
+User={}
+Session=plasma
+"#, self.username);
+
+        if std::fs::exists(config_path)?
+        {
+            let mut config_toml = std::fs::read_to_string(config_path)?;
+            config_toml.push_str(&init);
+
+            let mut config_file = File::create(config_path)?;
+            config_file.write_fmt(format_args!("{}", config_toml))?;
+        }
+        else
+        {
+            let mut config_file = File::create(config_path)?;
+            config_file.write_fmt(format_args!("{}", init))?;
+        }
+
+        Ok(())
+    }
 }
