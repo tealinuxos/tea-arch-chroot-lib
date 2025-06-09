@@ -4,6 +4,7 @@ use tea_arch_chroot_lib::resource::{ Timezones, Locales, FirmwareKind, Keyboard 
 use tea_arch_chroot_lib::chroot::Timezone;
 use tea_arch_chroot_lib::chroot::Account;
 use tea_arch_chroot_lib::chroot::Locale;
+use tea_arch_chroot_lib::chroot::shell;
 use tea_arch_chroot_lib::chroot::pacman::{install_package, refresh_mirror};
 use tea_arch_chroot_lib::chroot::bootloader::install_grub_bootloader;
 use tea_arch_chroot_lib::prechroot::rsync::start_rsync;
@@ -16,7 +17,8 @@ async fn main()
     // locale();
     // os();
     // keyboard();
-    account();
+    // account();
+    shell();
 }
 
 #[allow(dead_code)]
@@ -139,4 +141,8 @@ fn os()
     println!("{:#?}", Os::get_other_os())
 }
 
-
+#[allow(dead_code)]
+fn shell()
+{
+    println!("{:#?}", shell::change_shell("ssa", "/usr/bin/fish"));
+}

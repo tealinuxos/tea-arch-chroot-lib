@@ -6,6 +6,7 @@ pub mod bootloader;
 pub mod mkinitcpio;
 pub mod keyboard;
 pub mod os;
+pub mod shell;
 
 pub use self::account::Account;
 pub use self::locale::Locale;
