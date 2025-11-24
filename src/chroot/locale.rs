@@ -1,45 +1,38 @@
-use std::fs::File;
 use duct::cmd;
-use std::io::{ Write, Read, BufWriter, Error, BufReader  };
-use serde::{ Serialize, Deserialize };
+use serde::{Deserialize, Serialize};
+use specta::Type as SpectaType;
+use std::fs::File;
+use std::io::{BufReader, BufWriter, Error, Read, Write};
 
-#[derive(Debug, Serialize, Deserialize)]
-pub struct Locale
-{
+#[derive(Debug, Serialize, Deserialize, SpectaType)]
+pub struct Locale {
     main: String,
     // locales: Vec<String>
 }
 
-impl Locale
-{
+impl Locale {
     // pub fn new(main: &str, locales: Vec<&str>) -> Self
-    pub fn new(main: &str) -> Self
-    {
-        Self
-        {
+    pub fn new(main: &str) -> Self {
+        Self {
             main: main.to_string(),
             // locales: locales.iter().map(|s| s.to_string()).collect::<Vec<String>>()
         }
     }
 
-    pub fn get_main_locale(self) -> String
-    {
+    pub fn get_main_locale(self) -> String {
         self.main
     }
 
-    pub fn set_locale(self) -> Result<(), Error>
-    {
-        match Self::write_locale(&self.main)
-        {
+    pub fn set_locale(self) -> Result<(), Error> {
+        match Self::write_locale(&self.main) {
             Ok(_) => {
-
                 cmd!("arch-chroot", "/tealinux-mount", "locale-gen").run()?;
                 Self::set_locale_dot_conf(&self.main)?;
 
                 Ok(())
             }
 
-            Err(e) => Err(e)
+            Err(e) => Err(e),
         }
     }
 
@@ -59,8 +52,7 @@ impl Locale
     //     }
     // }
 
-    fn write_locale(locale: &str) -> Result<(), Error>
-    {
+    fn write_locale(locale: &str) -> Result<(), Error> {
         let locale_dot_gen = File::open("/tealinux-mount/etc/locale.gen")?;
         let mut locale_dot_gen = BufReader::new(locale_dot_gen);
 
@@ -70,7 +62,13 @@ impl Locale
 
         let after = before
             .lines()
-            .map(|line| if line.trim().ends_with(locale) { format!("{}\n", line.replace("#", "")) } else { format!("{}\n", line) })
+            .map(|line| {
+                if line.trim().ends_with(locale) {
+                    format!("{}\n", line.replace("#", ""))
+                } else {
+                    format!("{}\n", line)
+                }
+            })
             .collect::<String>();
 
         let locale_dot_gen = File::create("/tealinux-mount/etc/locale.gen")?;
@@ -81,15 +79,12 @@ impl Locale
         Ok(())
     }
 
-    fn set_locale_dot_conf(locale: &str) -> Result<(), Error>
-    {
+    fn set_locale_dot_conf(locale: &str) -> Result<(), Error> {
         let locale = locale.split_whitespace().next().unwrap();
         let locale_dot_conf = File::create("/tealinux-mount/etc/locale.conf");
 
-        match locale_dot_conf
-        {
+        match locale_dot_conf {
             Ok(mut file) => {
-
                 file.write_fmt(format_args!("LANG=en_US.UTF-8\n"))?;
                 file.write_fmt(format_args!("LC_ADDRESS={}\n", locale))?;
                 file.write_fmt(format_args!("LC_IDENTIFICATION={}\n", locale))?;
@@ -104,7 +99,7 @@ impl Locale
                 Ok(())
             }
 
-            Err(e) => Err(e)
+            Err(e) => Err(e),
         }
     }
 }

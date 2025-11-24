@@ -1,18 +1,18 @@
-use serde::{ Serialize, Deserialize };
-pub mod timezone;
-pub mod locale;
+use serde::{Deserialize, Serialize};
 pub mod keyboard;
+pub mod locale;
+pub mod timezone;
 
-pub use self::timezone::Timezones;
-pub use self::locale::Locales;
 pub use self::keyboard::Keyboard;
+pub use self::locale::Locales;
+pub use self::timezone::Timezones;
+use specta::Type as SpectaType;
 use std::default::Default;
 
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq)]
-pub enum FirmwareKind
-{
+#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, SpectaType)]
+pub enum FirmwareKind {
     UEFI,
-    BIOS
+    BIOS,
 }
 
 impl FirmwareKind {
@@ -23,14 +23,13 @@ impl FirmwareKind {
         }
     }
 }
-  
-#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq)]
-#[serde(rename_all="lowercase")]
-pub enum MethodKind
-{
+
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq, Eq, SpectaType)]
+#[serde(rename_all = "lowercase")]
+pub enum MethodKind {
     SINGLE,
     DUAL,
-    MANUAL
+    MANUAL,
 }
 
 impl Default for MethodKind {

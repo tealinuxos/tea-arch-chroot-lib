@@ -1,28 +1,27 @@
 use duct::cmd;
+use serde::{Deserialize, Serialize};
+use specta::Type as SpectaType;
 use std::io::Error;
-use serde::{ Serialize, Deserialize };
 
-#[derive(Debug, Serialize, Deserialize)]
-pub struct Timezone
-{
+#[derive(Debug, Serialize, Deserialize, SpectaType)]
+pub struct Timezone {
     region: String,
-    city: String
+    city: String,
 }
 
-impl Timezone
-{
-    pub fn new(region: &str, city: &str) -> Self
-    {
-        Self
-        {
+impl Timezone {
+    pub fn new(region: &str, city: &str) -> Self {
+        Self {
             region: region.to_string(),
-            city: city.to_string()
+            city: city.to_string(),
         }
     }
 
-    pub fn generate_localtime(&self) -> Result<(), Error>
-    {
-        let command = format!("arch-chroot /tealinux-mount ln -sf /usr/share/zoneinfo/{}/{} /etc/localtime", self.region, self.city);
+    pub fn generate_localtime(&self) -> Result<(), Error> {
+        let command = format!(
+            "arch-chroot /tealinux-mount ln -sf /usr/share/zoneinfo/{}/{} /etc/localtime",
+            self.region, self.city
+        );
 
         let command: Vec<String> = command.split_whitespace().map(|s| s.to_string()).collect();
 
